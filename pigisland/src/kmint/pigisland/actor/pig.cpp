@@ -1,4 +1,4 @@
-#include "kmint/pigisland/pig.hpp"
+#include "kmint/pigisland/actor/pig.hpp"
 #include "kmint/math/angle.hpp"
 #include "kmint/pigisland/resources.hpp"
 #include "kmint/random.hpp"

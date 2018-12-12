@@ -1,12 +1,14 @@
 #include "kmint/main.hpp" // voor de main loop
-#include "kmint/pigisland/boat.hpp"
-#include "kmint/pigisland/pig.hpp"
+#include "kmint/pigisland/actor/boat.hpp"
+#include "kmint/pigisland/actor/pig.hpp"
 #include "kmint/pigisland/resources.hpp"
-#include "kmint/pigisland/shark.hpp"
+#include "kmint/pigisland/actor/shark.hpp"
+#include "kmint/pigisland/algorithm/Astar.h"
 #include "kmint/play.hpp"
 #include "kmint/ui.hpp"
 
 using namespace kmint;
+using namespace pigisland;
 int main() {
   // een app object is nodig om
   ui::app app{};
@@ -25,8 +27,10 @@ int main() {
   for (int i = 0; i < 100; ++i) {
     s.build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f));
   }
-  s.build_actor<pigisland::shark>(map.graph());
-  s.build_actor<pigisland::boat>(map.graph());
+  auto& shark = s.build_actor<pigisland::shark>(map.graph());
+  auto& boat = s.build_actor<pigisland::boat>(map.graph());
+
+  auto astar = new Astar();
 
   // Maak een event_source aan (hieruit kun je alle events halen, zoals
   // toetsaanslagen)
@@ -38,6 +42,13 @@ int main() {
     // sinds de vorige keer dat deze lambda werd aangeroepen
     // loop controls is een object met eigenschappen die je kunt gebruiken om de
     // main-loop aan te sturen.
+
+    auto path = astar->perform(map.graph(), shark.node(), boat.node());
+
+    map.graph().untag_all();
+    for(auto p : path) {
+      map.graph()[p].tagged(true);
+    }
 
     for (ui::events::event &e : event_source) {
       // event heeft een methode handle_quit die controleert
