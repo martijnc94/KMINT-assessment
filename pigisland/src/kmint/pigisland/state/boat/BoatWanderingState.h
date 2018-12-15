@@ -2,6 +2,7 @@
 #define KMINT_ASESSMENT_WANDERINGSTATE_H
 
 #include <kmint/pigisland/actor/boat.hpp>
+#include <kmint/pigisland/algorithm/Astar.h>
 
 namespace kmint
 {

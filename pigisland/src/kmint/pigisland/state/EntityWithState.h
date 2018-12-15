@@ -12,15 +12,15 @@ namespace kmint
         {
         public:
             EntityWithState(T &owner);
-            StateMachine<T> getStateMachine() const;
+            StateMachine<T>& getStateMachine() const;
         protected:
             std::unique_ptr<StateMachine<T>> stateMachine;
         };
 
         template<class T>
-        StateMachine<T> EntityWithState<T>::getStateMachine() const
+        StateMachine<T>& EntityWithState<T>::getStateMachine() const
         {
-            return stateMachine;
+            return *stateMachine;
         }
 
         template<class T>

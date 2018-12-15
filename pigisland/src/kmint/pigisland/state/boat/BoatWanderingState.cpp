@@ -9,8 +9,8 @@ bool kmint::pigisland::BoatWanderingState::execute(kmint::pigisland::boat &entit
     entity.resetTSinceMove();
     entity.setDamage(entity.getDamage() + 1);
 
-    if (entity.getDamage() >= 100 ) {
-
+    if (entity.getDamage() >= 5 ) {
+        entity.getStateMachine().changeState(std::make_unique<BoatDamagedState>());
     }
 
     return true;
@@ -25,3 +25,4 @@ void kmint::pigisland::BoatWanderingState::enter(kmint::pigisland::boat &entity)
 {
     std::cout << "Porcus Victus entered wandering state." << std::endl;
 }
+

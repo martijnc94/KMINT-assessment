@@ -12,7 +12,7 @@ bool kmint::pigisland::WanderingState::execute(kmint::pigisland::shark &shark)
 
 void kmint::pigisland::WanderingState::enter(kmint::pigisland::shark &shark)
 {
-    std::cout << "Knabbel Entered wandering state." << std::endl;
+    std::cout << "Knabbel entered wandering state." << std::endl;
 }
 
 void kmint::pigisland::WanderingState::exit(kmint::pigisland::shark &shark)

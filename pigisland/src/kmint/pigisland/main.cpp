@@ -30,11 +30,11 @@ int main() {
   auto& shark = s.build_actor<pigisland::shark>(map.graph());
   auto& boat = s.build_actor<pigisland::boat>(map.graph());
 
-  auto astar = new Astar();
-
   // Maak een event_source aan (hieruit kun je alle events halen, zoals
   // toetsaanslagen)
   ui::events::event_source event_source{};
+
+  map.graph()[29].tagged(true);
 
   // main_loop stuurt alle actors aan.
   main_loop(s, window, [&](delta_time dt, loop_controls &ctl) {
@@ -42,13 +42,6 @@ int main() {
     // sinds de vorige keer dat deze lambda werd aangeroepen
     // loop controls is een object met eigenschappen die je kunt gebruiken om de
     // main-loop aan te sturen.
-
-    auto path = astar->perform(map.graph(), shark.node(), boat.node());
-
-    map.graph().untag_all();
-    for(auto p : path) {
-      map.graph()[p].tagged(true);
-    }
 
     for (ui::events::event &e : event_source) {
       // event heeft een methode handle_quit die controleert

@@ -42,5 +42,10 @@ namespace kmint
             t_since_move_ = from_seconds(0);
         }
 
+        void boat::move(const map::map_node &position)
+        {
+            this->node(position);
+        }
+
     } // namespace pigisland
 } // namespace kmint

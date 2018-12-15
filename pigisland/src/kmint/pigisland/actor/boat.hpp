@@ -30,6 +30,7 @@ namespace kmint
             int getDamage() const { return damage; };
             void setDamage(int amount);
             void resetTSinceMove();
+            void move(const map::map_node &position);
         private:
             play::image_drawable drawable_;
             //[[maybe_unused]] map::map_graph *map_;
