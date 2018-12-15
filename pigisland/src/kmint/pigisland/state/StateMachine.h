@@ -14,6 +14,7 @@ namespace kmint
         {
         public:
             explicit StateMachine(T &owner);
+            ~StateMachine() = default;
             void update() const;
 
             void changeState(std::unique_ptr<State<T>> newState);

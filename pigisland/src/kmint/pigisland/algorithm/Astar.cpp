@@ -5,7 +5,7 @@ const double kmint::pigisland::Astar::heurestic(const kmint::map::map_node &a, c
     return std::abs((a.location().x()) - (b.location().x()) + std::abs((a.location().y()) - (b.location().y()))) / 32;
 }
 
-std::vector<int> kmint::pigisland::Astar::perform(kmint::map::map_graph &graph, const kmint::map::map_node &source,
+std::vector<int> kmint::pigisland::Astar::perform(const map::map_graph &graph, const kmint::map::map_node &source,
                                                   const kmint::map::map_node &destination)
 {
     std::map<int, double> fScore;

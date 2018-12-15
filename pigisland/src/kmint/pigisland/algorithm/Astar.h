@@ -10,7 +10,9 @@ namespace kmint
         class Astar : public Pathfinder
         {
         public:
-            std::vector<int> perform(map::map_graph &graph, map::map_node const &source, map::map_node const &destination) override;
+            ~Astar() = default;
+            std::vector<int> perform(const map::map_graph &graph, map::map_node const &source,
+                                     map::map_node const &destination) override;
         private:
             const double heurestic(const map::map_node &a, const map::map_node &b) const;
         };

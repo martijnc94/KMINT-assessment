@@ -1,6 +1,6 @@
 #include "Pathfinder.h"
 
-int kmint::pigisland::Pathfinder::get_lowest(kmint::map::map_graph &graph, const std::vector<int> &closedList,
+int kmint::pigisland::Pathfinder::get_lowest(const map::map_graph &graph, const std::vector<int> &closedList,
                                              std::map<int, double> &distances) const
 {
     int min = std::numeric_limits<int>::max();
@@ -24,6 +24,9 @@ kmint::pigisland::Pathfinder::reconstruct_path(std::map<int, int> &cameFrom, int
         cur = cameFrom[cur];
         path.emplace_back(cur);
     }
+
+    std::reverse(path.begin(), path.end());
+    path.emplace_back(destination);
 
     return path;
 }
