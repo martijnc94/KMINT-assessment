@@ -3,6 +3,8 @@
 
 #include "kmint/graphics.hpp"
 #include "kmint/map/map.hpp"
+#include "kmint/pigisland/actor/Obstacle.h"
+#include <vector>
 
 namespace kmint {
 namespace pigisland {
@@ -11,6 +13,7 @@ map::map map();
 graphics::image shark_image();
 graphics::image pig_image();
 graphics::image boat_image();
+std::vector<Obstacle> makeObstacles();
 
 } // namespace pigisland
 } // namespace kmint

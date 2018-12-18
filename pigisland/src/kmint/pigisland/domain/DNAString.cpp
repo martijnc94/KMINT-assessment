@@ -1,57 +1,78 @@
+#include <memory>
 #include "DNAString.h"
+#include "Random.h"
 
-DNAString::DNAString(double attractionToKnabbel, double attractionToPorcusVictus, double cohesion, double separation,
-                     double alignment) : attractionToKnabbel(attractionToKnabbel),
-                                         attractionToPorcusVictus(attractionToPorcusVictus), cohesion(cohesion),
-                                         separation(separation), alignment(alignment)
-{}
-
-double DNAString::getAttractionToKnabbel() const
+namespace kmint
 {
-    return attractionToKnabbel;
-}
+    namespace pigisland
+    {
+        DNAString::DNAString(double attractionToKnabbel, double attractionToPorcusVictus, double cohesion,
+                             double separation, double alignment) : attractionToKnabbel(attractionToKnabbel),
+                                                                    attractionToPorcusVictus(attractionToPorcusVictus),
+                                                                    cohesion(cohesion), separation(separation),
+                                                                    alignment(alignment)
+        {}
 
-void DNAString::setAttractionToKnabbel(double attractionToKnabbel)
-{
-    DNAString::attractionToKnabbel = attractionToKnabbel;
-}
+        double DNAString::getAttractionToKnabbel() const
+        {
+            return attractionToKnabbel;
+        }
 
-double DNAString::getAttractionToPorcusVictus() const
-{
-    return attractionToPorcusVictus;
-}
+        void DNAString::setAttractionToKnabbel(double attractionToKnabbel)
+        {
+            DNAString::attractionToKnabbel = attractionToKnabbel;
+        }
 
-void DNAString::setAttractionToPorcusVictus(double attractionToPorcusVictus)
-{
-    DNAString::attractionToPorcusVictus = attractionToPorcusVictus;
-}
+        double DNAString::getAttractionToPorcusVictus() const
+        {
+            return attractionToPorcusVictus;
+        }
 
-double DNAString::getCohesion() const
-{
-    return cohesion;
-}
+        void DNAString::setAttractionToPorcusVictus(double attractionToPorcusVictus)
+        {
+            DNAString::attractionToPorcusVictus = attractionToPorcusVictus;
+        }
 
-void DNAString::setCohesion(double cohesion)
-{
-    DNAString::cohesion = cohesion;
-}
+        double DNAString::getCohesion() const
+        {
+            return cohesion;
+        }
 
-double DNAString::getSeparation() const
-{
-    return separation;
-}
+        void DNAString::setCohesion(double cohesion)
+        {
+            DNAString::cohesion = cohesion;
+        }
 
-void DNAString::setSeparation(double separation)
-{
-    DNAString::separation = separation;
-}
+        double DNAString::getSeparation() const
+        {
+            return separation;
+        }
 
-double DNAString::getAlignment() const
-{
-    return alignment;
-}
+        void DNAString::setSeparation(double separation)
+        {
+            DNAString::separation = separation;
+        }
 
-void DNAString::setAlignment(double alignment)
-{
-    DNAString::alignment = alignment;
+        double DNAString::getAlignment() const
+        {
+            return alignment;
+        }
+
+        void DNAString::setAlignment(double alignment)
+        {
+            DNAString::alignment = alignment;
+        }
+
+        std::unique_ptr<DNAString> DNAString::createRandom()
+        {
+            return std::make_unique<DNAString>(
+                    pickRandomFloat(-1.0, 1.0),
+                    pickRandomFloat(-1.0, 1.0),
+                    pickRandomFloat(0, 1.0),
+                    pickRandomFloat(0, 1.0),
+                    pickRandomFloat(0, 1.0)
+            );
+        }
+
+    }
 }
