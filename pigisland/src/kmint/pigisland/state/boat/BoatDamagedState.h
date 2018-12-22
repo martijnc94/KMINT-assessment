@@ -18,7 +18,7 @@ namespace kmint
 
         private:
             std::unique_ptr<Astar> astar;
-            size_t destinationID;
+            int destinationID;
             std::unique_ptr<std::vector<int>> path;
         };
     }

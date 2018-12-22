@@ -89,10 +89,11 @@ namespace kmint
         void boat::adjustMooringChance(int id, double amount)
         {
             auto newChance = (mooringChances[id] + amount) / 2;
+            auto difference = newChance - mooringChances[id];
             setMooringChange(id, newChance);
             for (auto& c : mooringChances) {
                 if (c.first != id) {
-                    setMooringChange(c.first, c.second - (newChance / 2));
+                    setMooringChange(c.first, c.second - (difference / 2));
                 }
             }
         }
