@@ -43,7 +43,7 @@ namespace kmint
                 heading = vectorNormalize(velocity);
                 side = vectorPerp(heading);
                 location(location() + velocity);
-//                wrapAround(*this);
+                wrapAround(*this);
                 steeringBehaviors->enforceNonPenetrationConstraint();
             }
         }
