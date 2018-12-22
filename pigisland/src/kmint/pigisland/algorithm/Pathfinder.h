@@ -10,9 +10,11 @@ namespace kmint
     {
         class Pathfinder
         {
+        public:
             virtual std::vector<int> perform(const map::map_graph &graph, map::map_node const &source,
                                              map::map_node const &destination) = 0;
 
+            virtual ~Pathfinder() = default;
         protected:
             virtual int get_lowest(const map::map_graph &graph, const std::vector<int> &closedList,
                                    std::map<int, double> &distances) const;
