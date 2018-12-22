@@ -37,6 +37,18 @@ namespace kmint {
                 loc.x(1000);
                 entity.setLocation(loc);
             }
+
+            if (entity.location().y() < 0) {
+                auto loc = entity.location();
+                loc.y(744);
+                entity.setLocation(loc);
+            }
+
+            if (entity.location().y() > 768) {
+                auto loc = entity.location();
+                loc.y(24);
+                entity.setLocation(loc);
+            }
         }
     }
 }
