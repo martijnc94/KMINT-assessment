@@ -2,7 +2,6 @@
 #define KMINT_ASESSMENT_DNASTRING_H
 
 #include <memory>
-#include <random>
 
 namespace kmint
 {

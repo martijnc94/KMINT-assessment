@@ -3,24 +3,38 @@
 
 #include <random>
 
-std::default_random_engine &globalEngine()
+namespace kmint
 {
-    static std::default_random_engine u{};
+    namespace pigisland
+    {
 
-    return u;
-}
+        static std::default_random_engine &globalEngine()
+        {
+            static std::default_random_engine u{};
 
-void randomize()
-{
-    static std::random_device rd{};
-    globalEngine().seed(rd());
-}
+            return u;
+        }
 
-double pickRandomFloat(const double min, const double max)
-{
-    static std::uniform_real_distribution<double> d{min, max};
+        static void randomize()
+        {
+            static std::random_device rd{};
+            globalEngine().seed(rd());
+        }
 
-    return d(globalEngine());
+        static double pickRandomFloat(const double min, const double max)
+        {
+            static std::uniform_real_distribution<double> d{min, max};
+
+            return d(globalEngine());
+        }
+
+        static int pickRandomInt(int min, int max)
+        {
+            static std::uniform_int_distribution<int> i{min, max};
+
+            return i(globalEngine());
+        }
+    }
 }
 
 #endif //KMINT_ASESSMENT_RANDOM_H

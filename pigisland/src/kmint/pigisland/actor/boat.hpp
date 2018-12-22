@@ -2,6 +2,8 @@
 #define KMINT_PIGISLAND_BOAT_HPP
 
 #include <kmint/pigisland/state/EntityWithState.h>
+#include <map>
+#include <kmint/pigisland/domain/Port.h>
 #include "kmint/map/map.hpp"
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
@@ -31,11 +33,20 @@ namespace kmint
             void setDamage(int amount);
             void resetTSinceMove();
             void move(const map::map_node &position);
+
+            void setMooringChange(int id, double chance);
+            void adjustMooringChance(int id, double amount);
+            void resetMooringChances();
+            int decideMooringChance() const;
+            Port& getPort(int id)
+            { return *ports[id]; }
         private:
             play::image_drawable drawable_;
             //[[maybe_unused]] map::map_graph *map_;
             delta_time t_since_move_{};
             int damage;
+            std::map<int, double> mooringChances;
+            std::map<int, std::unique_ptr<Port>> ports;
         };
 
     } // namespace pigisland
