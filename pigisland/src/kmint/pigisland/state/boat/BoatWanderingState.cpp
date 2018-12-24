@@ -9,7 +9,7 @@ bool kmint::pigisland::BoatWanderingState::execute(kmint::pigisland::boat &entit
     entity.resetTSinceMove();
     entity.setDamage(entity.getDamage() + 1);
 
-    if (entity.getDamage() >= 5 ) {
+    if (entity.getDamage() >= BOATDAMAGERESISTANCE ) {
         entity.getStateMachine().changeState(std::make_unique<BoatDamagedState>());
     }
 

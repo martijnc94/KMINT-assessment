@@ -1,6 +1,7 @@
 #include <kmint/pigisland/math.h>
 #include "SteeringBehaviors.h"
 #include "kmint/pigisland/actor/pig.hpp"
+#include <kmint/pigisland/actor/shark.hpp>
 
 kmint::pigisland::SteeringBehaviors::SteeringBehaviors(pig &actor, std::vector<Obstacle> &obstacles) : actor(actor), obstacles(obstacles) {}
 

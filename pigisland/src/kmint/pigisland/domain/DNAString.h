@@ -10,8 +10,16 @@ namespace kmint
         class DNAString
         {
         public:
+            typedef std::vector<double> Chromosome;
+
             DNAString(double attractionToKnabbel, double attractionToPorcusVictus, double cohesion, double separation,
                       double alignment);
+            DNAString();
+
+            static std::unique_ptr<DNAString> createRandom();
+            Chromosome getChromosome() const;
+            void setChromosome(Chromosome const &chromosome);
+            DNAString operator*(DNAString const &other) const;
 
             double getAttractionToKnabbel() const;
             void setAttractionToKnabbel(double attractionToKnabbel);
@@ -23,7 +31,6 @@ namespace kmint
             void setSeparation(double separation);
             double getAlignment() const;
             void setAlignment(double alignment);
-            static std::unique_ptr<DNAString> createRandom();
         private:
             double attractionToKnabbel;
             double attractionToPorcusVictus;

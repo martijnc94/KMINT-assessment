@@ -1,6 +1,8 @@
 #include "kmint/pigisland/node_algorithm.hpp"
 #include "kmint/random.hpp"
 #include <algorithm>
+#include <map>
+#include <kmint/play/actor.hpp>
 
 namespace kmint {
 namespace pigisland {
@@ -23,6 +25,22 @@ map::map_node const &find_random_mooring_place(map::map_graph const &graph) {
 
 map::map_node const &find_shark_resting_place(map::map_graph const &graph) {
   return find_node_of_kind(graph, 'K');
+}
+
+map::map_node const &find_closest_node(map::map_graph const &graph, math::vector2d const &a) {
+  std::map<int, double> distances;
+  for (auto i = 0; i < graph.num_nodes(); ++i) {
+    distances[i] = distance(graph[i].location(), a);
+  }
+
+  // Sort the distances and return the lowest.
+  using mypair = std::pair<int, double>;
+  std::vector<mypair> v(std::begin(distances), std::end(distances));
+  std::sort(std::begin(v), std::end(v), [](const mypair &a, const mypair &b){
+    return a.second < b.second;
+  });
+
+  return graph[v.begin()->first];
 }
 
 int waiting_time(map::map_node const &node) {

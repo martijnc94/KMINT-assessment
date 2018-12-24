@@ -3,33 +3,42 @@
 
 #include <kmint/pigisland/state/StateMachine.h>
 #include <kmint/pigisland/state/EntityWithState.h>
+#include <kmint/pigisland/algorithm/Farm.h>
 #include "kmint/map/map.hpp"
 #include "kmint/play.hpp"
+#include <kmint/pigisland/actor/shark.hpp>
 #include "kmint/primitives.hpp"
 
 namespace kmint
 {
     namespace pigisland
     {
+        static const int SHARKSTARTENERGY = 5;
+
         class shark : public play::map_bound_actor, public EntityWithState<shark>
         {
         public:
-            explicit shark(kmint::map::map_graph &g);
+            explicit shark(kmint::map::map_graph &g, Farm &farm);
 
             ui::drawable const &drawable() const override
             { return drawable_; }
-
             bool incorporeal() const override
             { return false; }
-
             scalar radius() const override
-            { return 16.0; }
-
+            { return 40.0; }
             void act(delta_time dt) override;
-
             void resetTSinceMove();
-
+            void move(const map::map_node &position);
+            scalar range_of_perception() const override { return 100.f;  }
+            bool perceptive() const override { return true; }
+            const map::map_node* getRestingPlace()
+            { return resting_place_; };
+            int getEnergy() const;
+            void setEnergy(int energy);
+            Farm &getFarm() const;
         private:
+            int energy;
+            Farm &farm;
             play::image_drawable drawable_;
             map::map_graph *map_;
             map::map_node const *resting_place_;

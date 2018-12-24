@@ -30,9 +30,9 @@ namespace kmint
 
         static int pickRandomInt(int min, int max)
         {
-            static std::uniform_int_distribution<int> i{min, max};
+            static std::uniform_int_distribution<> d{min, max};
 
-            return i(globalEngine());
+            return d(globalEngine());
         }
     }
 }

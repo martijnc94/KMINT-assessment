@@ -28,7 +28,11 @@ namespace kmint
                 : EntityWithForce{random_vector()}, boatActor(b),
                   sharkActor(s), drawable_{*this, pig_image()},
                   steeringBehaviors(std::make_unique<SteeringBehaviors>(*this, obstacles)),
-                  geneticAttributes(DNAString::createRandom())
+                  geneticAttributes(DNAString::createRandom()),
+                  eaten(false),
+                  saved(false),
+                  fitness(100000),
+                  dedicated(false)
         {}
 
 
@@ -45,13 +49,17 @@ namespace kmint
                 location(location() + velocity);
                 wrapAround(*this);
                 steeringBehaviors->enforceNonPenetrationConstraint();
+                setFitness(getFitness() - 1);
             }
         }
 
         pig::pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna, std::vector<Obstacle> &obstacles)
                 : EntityWithForce{
                 random_vector()}, boatActor(b), sharkActor(s), drawable_{*this, pig_image()}, steeringBehaviors(
-                std::make_unique<SteeringBehaviors>(*this, obstacles)), geneticAttributes(std::move(dna))
+                std::make_unique<SteeringBehaviors>(*this, obstacles)), geneticAttributes(std::move(dna)),
+                eaten(false),
+                saved(false),
+                fitness(0)
         {}
 
         DNAString &pig::getGeneticAttributes() const
@@ -67,6 +75,48 @@ namespace kmint
         shark &pig::getShark() const
         {
             return sharkActor;
+        }
+
+        bool pig::isSaved() const
+        {
+            return saved;
+        }
+
+        void pig::setSaved(bool saved)
+        {
+            pig::saved = saved;
+        }
+
+        bool pig::isEaten() const
+        {
+            return eaten;
+        }
+
+        int pig::getFitness() const
+        {
+            return fitness;
+        }
+
+        void pig::setFitness(int fitness)
+        {
+            if (!eaten && !saved) {
+                pig::fitness = fitness;
+            }
+        }
+
+        void pig::setGeneticAttributes(std::unique_ptr<DNAString> &gA)
+        {
+            geneticAttributes = std::move(gA);
+        }
+
+        bool pig::isDedicated() const
+        {
+            return dedicated;
+        }
+
+        void pig::setDedicated(bool dedicated)
+        {
+            pig::dedicated = dedicated;
         }
 
     } // namespace pigisland

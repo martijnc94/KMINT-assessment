@@ -13,6 +13,13 @@ namespace kmint
                                                                     alignment(alignment)
         {}
 
+
+        DNAString::DNAString() : attractionToKnabbel(0), attractionToPorcusVictus(0), cohesion(0), separation(0), alignment(0)
+        {
+
+        }
+
+
         double DNAString::getAttractionToKnabbel() const
         {
             return attractionToKnabbel;
@@ -74,5 +81,56 @@ namespace kmint
             );
         }
 
+        DNAString::Chromosome DNAString::getChromosome() const
+        {
+            auto dString = Chromosome{};
+            dString.emplace_back(getAttractionToKnabbel());
+            dString.emplace_back(getAttractionToPorcusVictus());
+            dString.emplace_back(getCohesion());
+            dString.emplace_back(getSeparation());
+            dString.emplace_back(getAlignment());
+
+            return dString;
+        }
+
+        void DNAString::setChromosome(const DNAString::Chromosome &chromosome)
+        {
+            setAttractionToKnabbel(chromosome[0]);
+            setAttractionToPorcusVictus(chromosome[1]);
+            setCohesion(chromosome[2]);
+            setSeparation(chromosome[3]);
+            setAlignment(chromosome[4]);
+        }
+
+        DNAString DNAString::operator*(DNAString const &other) const
+        {
+            randomize();
+            auto newDNAString = DNAString{};
+            auto newChromosome = Chromosome{};
+            auto chro1 = getChromosome();
+            auto chro2 = other.getChromosome();
+            newChromosome.resize(chro1.size());
+
+            auto split = pickRandomInt(1, static_cast<int>(chro1.size() - 1));
+            for (auto i = 0; i < split; ++i) {
+                newChromosome[i] = chro1[i];
+            }
+            for (auto i = split; i < chro1.size(); ++i) {
+                newChromosome[i] = chro2[i];
+            }
+
+            randomize();
+            auto r = pickRandomInt(0, 99);
+            auto toMutate = (pickRandomInt(0, 99) < 5);
+            if (toMutate) {
+                auto mutateIndex = pickRandomInt(0, static_cast<int>(chro1.size()) - 1);
+                auto mutateAmount = pickRandomFloat(0, 1);
+                newChromosome[mutateIndex] = mutateAmount;
+            }
+
+            newDNAString.setChromosome(newChromosome);
+
+            return newDNAString;
+        }
     }
 }

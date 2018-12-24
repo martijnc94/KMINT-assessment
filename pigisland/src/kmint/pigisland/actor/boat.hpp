@@ -13,6 +13,7 @@ namespace kmint
 {
     namespace pigisland
     {
+        static const int BOATDAMAGERESISTANCE = 10;
 
         class boat : public play::map_bound_actor, public EntityWithState<boat>
         {

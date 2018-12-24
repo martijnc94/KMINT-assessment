@@ -5,6 +5,7 @@
 #include "kmint/pigisland/resources.hpp"
 #include "boat.hpp"
 #include <iostream>
+#include <kmint/pigisland/state/boat/global/InWaterState.h>
 
 
 namespace kmint
@@ -17,6 +18,7 @@ namespace kmint
                                                damage(0)/*, map_{&g}*/
         {
             stateMachine->changeState(std::make_unique<BoatWanderingState>());
+            stateMachine->setGlobalState(std::make_unique<InWaterState>());
             auto cornID = find_node_of_kind(graph(), '1').node_id();
             auto grassID = find_node_of_kind(graph(), '2').node_id();
             auto treeID = find_node_of_kind(graph(), '3').node_id();

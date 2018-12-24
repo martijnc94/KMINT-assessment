@@ -24,15 +24,24 @@ int main()
     play::stage s{};
 
     auto map = pigisland::map();
-    map.graph()[0].tagged(true);
     std::vector<Obstacle> obstacles = makeObstacles();
     s.build_actor<play::background>(math::size(1024, 768), graphics::image{map.background_image()});
     s.build_actor<play::map_actor>(math::vector2d{0.f, 0.f}, map.graph());
-    auto &shark = s.build_actor<pigisland::shark>(map.graph());
+    std::unique_ptr<Farm> farm = std::make_unique<Farm>(s);
+    auto &shark = s.build_actor<pigisland::shark>(map.graph(), *farm);
     auto &boat = s.build_actor<pigisland::boat>(map.graph());
+    farm->setBoat(&boat);
+    farm->setShark(&shark);
+    farm->setObstacles(&obstacles);
+
+
+    std::vector<pig *> pigs;
     for (int i = 0; i < 100; ++i) {
-        s.build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f), boat, shark, obstacles);
+        auto &pig = s.build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f), boat, shark, obstacles);
+        pigs.push_back(&pig);
     }
+
+    farm->setPigPopulation(&pigs);
 
     // Maak een event_source aan (hieruit kun je alle events halen, zoals
     // toetsaanslagen)

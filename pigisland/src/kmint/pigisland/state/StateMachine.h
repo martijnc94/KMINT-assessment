@@ -77,6 +77,7 @@ namespace kmint
         void StateMachine<T>::setGlobalState(std::unique_ptr<State<T>> s)
         {
             globalState = std::move(s);
+            globalState->enter(owner);
         }
 
         template<class T>

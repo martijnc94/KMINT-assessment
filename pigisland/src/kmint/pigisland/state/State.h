@@ -5,6 +5,13 @@ namespace kmint
 {
     namespace pigisland
     {
+        struct Telegram {
+            int Sender;
+            int Receiver;
+            int Msg;
+            void* ExtraInfo;
+        };
+
         template<class T>
         class State
         {
