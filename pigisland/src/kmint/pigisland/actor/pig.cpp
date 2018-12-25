@@ -31,8 +31,7 @@ namespace kmint
                   geneticAttributes(DNAString::createRandom()),
                   eaten(false),
                   saved(false),
-                  fitness(100000),
-                  dedicated(false)
+                  fitness(BASEFITNESS)
         {}
 
 
@@ -108,17 +107,6 @@ namespace kmint
         {
             geneticAttributes = std::move(gA);
         }
-
-        bool pig::isDedicated() const
-        {
-            return dedicated;
-        }
-
-        void pig::setDedicated(bool dedicated)
-        {
-            pig::dedicated = dedicated;
-        }
-
     } // namespace pigisland
 
 } // namespace kmint

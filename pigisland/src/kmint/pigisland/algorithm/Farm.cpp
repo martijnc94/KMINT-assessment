@@ -19,27 +19,41 @@ std::vector<kmint::pigisland::pig *> kmint::pigisland::Farm::breed()
     auto random = pickRandomFloat(0, 1) / 100;
     pig* first;
     pig* second;
-    for (int i = 0; i < 100; ++i) {
-        first = choosePig(random, chances);
-        random = pickRandomFloat(0, 1) / 100;
-        second = choosePig(random, chances);
-        while(first == second) {
+
+    // Generate new DNA strings from existing pig population.
+    auto counter = 0;
+    std::vector<std::unique_ptr<DNAString>> dnaList;
+    for (auto p = stage.begin(); p != stage.end(); ++p) {
+        auto &f = *p;
+        if (auto c = dynamic_cast<pig *>(&f); c) {
+            first = choosePig(random, chances);
             random = pickRandomFloat(0, 1) / 100;
             second = choosePig(random, chances);
+            while(first == second) {
+                random = pickRandomFloat(0, 1) / 100;
+                second = choosePig(random, chances);
+            }
+
+            dnaList.emplace_back(std::make_unique<DNAString>(first->getGeneticAttributes() * second->getGeneticAttributes()));
+
+            ++counter;
         }
-
-        auto newDna = std::make_unique<DNAString>(first->getGeneticAttributes() * second->getGeneticAttributes());
-
-//        auto& pig = stage.build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f), (*boat), (*shark), (*obstacles));
-//        pig.setGeneticAttributes(newDna);
-//        newPigs.push_back(&pig);
     }
 
-    // Delete old generation of pigs.
-    for (auto i = stage.begin(); i != stage.end(); ++i) {
-        auto &f = *i;
-        if (auto p = dynamic_cast<pig *>(&f); p) {
-            stage.remove_actor(*i);
+    // Make new pig pupulation.
+    counter = 0;
+    for (auto p = stage.begin(); p != stage.end(); ++p) {
+        auto &f = *p;
+        if (auto c = dynamic_cast<pig *>(&f); c) {
+            auto newLoc = math::vector2d(counter * 10.0f, counter * 6.0f);
+            c->setLocation(newLoc);
+            c->setGeneticAttributes(dnaList[counter]);
+
+            c->setFitness(BASEFITNESS);
+            c->setEaten(false);
+            c->setSaved(false);
+
+            ++counter;
         }
     }
 
@@ -72,17 +86,15 @@ std::map<kmint::pigisland::pig *, double> kmint::pigisland::Farm::generateBreedi
     }
 
     // Calculate breeding chances.
-    for (auto& p : *pigs) {
-        double chance = fitness[p] / totalFitness;
-        chances[p] = chance;
+    for (auto p = stage.begin(); p != stage.end(); ++p) {
+        auto &f = *p;
+        if (auto c = dynamic_cast<pig *>(&f); c) {
+            double chance = fitness[c] / totalFitness;
+            chances[c] = chance;
+        }
     }
 
     return chances;
-}
-
-void kmint::pigisland::Farm::setPigPopulation(std::vector<kmint::pigisland::pig *> *p)
-{
-    pigs = p;
 }
 
 kmint::pigisland::pig *kmint::pigisland::Farm::choosePig(double random,
@@ -95,19 +107,4 @@ kmint::pigisland::pig *kmint::pigisland::Farm::choosePig(double random,
     }
 
     return chances.begin()->first;
-}
-
-void kmint::pigisland::Farm::setShark(kmint::pigisland::shark *shark)
-{
-    Farm::shark = shark;
-}
-
-void kmint::pigisland::Farm::setBoat(kmint::pigisland::boat *boat)
-{
-    Farm::boat = boat;
-}
-
-void kmint::pigisland::Farm::setObstacles(std::vector<kmint::pigisland::Obstacle> *obstacles)
-{
-    Farm::obstacles = obstacles;
 }

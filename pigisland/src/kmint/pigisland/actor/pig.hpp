@@ -12,6 +12,7 @@ namespace kmint
     namespace pigisland
     {
         class shark;
+        static const int BASEFITNESS = 10000;
 
         class pig : public EntityWithForce
         {
@@ -40,8 +41,6 @@ namespace kmint
             int getFitness() const;
             void setFitness(int fitness);
             void setGeneticAttributes(std::unique_ptr<DNAString> &gA);
-            bool isDedicated() const;
-            void setDedicated(bool dedicated);
         private:
             boat &boatActor;
             shark &sharkActor;
@@ -52,7 +51,6 @@ namespace kmint
             bool eaten;
             bool saved;
             int fitness;
-            bool dedicated;
         };
 
     } // namespace pigisland

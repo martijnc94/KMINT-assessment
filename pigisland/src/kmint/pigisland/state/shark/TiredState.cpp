@@ -16,7 +16,7 @@ namespace kmint
 
             if (entity.node().node_id() == destinationID) {
                 // Initiate breeding.
-//                entity.getFarm().breed();
+                entity.getFarm().breed();
 
                 // Reset the shark.
                 entity.setEnergy(SHARKSTARTENERGY);
