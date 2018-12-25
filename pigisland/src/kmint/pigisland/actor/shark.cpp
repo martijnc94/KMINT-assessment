@@ -5,15 +5,17 @@
 #include "kmint/pigisland/resources.hpp"
 #include "kmint/random.hpp"
 #include "shark.hpp"
+#include "boat.hpp"
 
 namespace kmint
 {
     namespace pigisland
     {
-        shark::shark(kmint::map::map_graph &g, Farm &farm) : play::map_bound_actor{g, find_shark_resting_place(g)},
-                                                                   EntityWithState(*this),
-                                                                   energy(SHARKSTARTENERGY), farm(farm), drawable_{*this, shark_image()}, map_{&g},
-                                                                   resting_place_(&node())
+        shark::shark(kmint::map::map_graph &g, Farm &farm, boat &b) : play::map_bound_actor{g, find_shark_resting_place(g)},
+                                                                         EntityWithState(*this),
+                                                                         energy(SHARKSTARTENERGY), farm(farm), drawable_{*this, shark_image()}, map_{&g},
+                                                                         resting_place_(&node()),
+                                                                         boatEntity(b)
         {
             stateMachine->setGlobalState(std::make_unique<NormalState>());
             stateMachine->changeState(std::make_unique<WanderingState>());

@@ -1,8 +1,8 @@
-#include <iostream>
+#include <kmint/pigisland/state/shark/ScaredState.h>
 #include <kmint/pigisland/state/shark/TiredState.h>
-#include <kmint/pigisland/actor/pig.hpp>
 #include "NormalState.h"
 #include "EmptyState.h"
+#include <iostream>
 
 namespace kmint
 {
@@ -24,6 +24,18 @@ namespace kmint
                         p->setEaten(true);
                     }
                 }
+            }
+
+            // Shark scared state demo code.
+//            auto a = std::make_unique<Astar>();
+//            auto path = a->perform(entity.graph(), entity.node(), entity.getBoat().node());
+//            entity.move(entity.graph()[path.front()]);
+//            path.erase(path.begin());
+
+            auto distance = math::distance(entity.location(), entity.getBoat().location());
+            if (distance <= SHARKSCAREDRANGE) {
+                entity.getStateMachine().changeState(std::make_unique<ScaredState>());
+                entity.getStateMachine().setGlobalState(std::make_unique<EmptyState>());
             }
 
             return true;

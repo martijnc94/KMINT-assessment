@@ -3,7 +3,7 @@
 
 bool kmint::pigisland::EmptyState::execute(kmint::pigisland::shark &entity)
 {
-    return false;
+    return true;
 }
 
 void kmint::pigisland::EmptyState::enter(kmint::pigisland::shark &entity)

@@ -28,8 +28,8 @@ int main()
     s.build_actor<play::background>(math::size(1024, 768), graphics::image{map.background_image()});
     s.build_actor<play::map_actor>(math::vector2d{0.f, 0.f}, map.graph());
     std::unique_ptr<Farm> farm = std::make_unique<Farm>(s);
-    auto &shark = s.build_actor<pigisland::shark>(map.graph(), *farm);
     auto &boat = s.build_actor<pigisland::boat>(map.graph());
+    auto &shark = s.build_actor<pigisland::shark>(map.graph(), *farm, boat);
 
     std::vector<pig *> pigs;
     for (int i = 0; i < 100; ++i) {

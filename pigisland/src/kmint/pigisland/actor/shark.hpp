@@ -13,12 +13,13 @@ namespace kmint
 {
     namespace pigisland
     {
-        static const int SHARKSTARTENERGY = 5;
+        static const int SHARKSTARTENERGY = 100;
+        static const int SHARKSCAREDRANGE = 50;
 
         class shark : public play::map_bound_actor, public EntityWithState<shark>
         {
         public:
-            explicit shark(kmint::map::map_graph &g, Farm &farm);
+            explicit shark(kmint::map::map_graph &g, Farm &farm, boat &b);
 
             ui::drawable const &drawable() const override
             { return drawable_; }
@@ -36,6 +37,8 @@ namespace kmint
             int getEnergy() const;
             void setEnergy(int energy);
             Farm &getFarm() const;
+            boat &getBoat() const
+            { return boatEntity; }
         private:
             int energy;
             Farm &farm;
@@ -43,6 +46,7 @@ namespace kmint
             map::map_graph *map_;
             map::map_node const *resting_place_;
             delta_time t_since_move_{};
+            boat &boatEntity;
         };
 
     } // namespace pigisland
