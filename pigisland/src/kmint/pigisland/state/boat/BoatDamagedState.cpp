@@ -5,14 +5,14 @@
 #include <kmint/pigisland/domain/Random.h>
 
 kmint::pigisland::BoatDamagedState::BoatDamagedState(): astar(std::make_unique<Astar>())
-{
-
-}
+{}
 
 bool kmint::pigisland::BoatDamagedState::execute(kmint::pigisland::boat &entity)
 {
     entity.resetTSinceMove();
+
     entity.move(entity.graph()[path->front()]);
+    const_cast<map::map_graph &>(entity.graph())[path->front()].tag(kmint::graph::node_tag::normal);
     path->erase(path->begin());
 
     if (entity.node().node_id() == destinationID) {
@@ -35,12 +35,9 @@ void kmint::pigisland::BoatDamagedState::enter(kmint::pigisland::boat &entity)
 {
     std::cout << "Porcus Victus entered damaged state." << std::endl;
 
-    auto cornID = find_node_of_kind(entity.graph(), '1').node_id();
-    auto grassID = find_node_of_kind(entity.graph(), '2').node_id();
-    auto treeID = find_node_of_kind(entity.graph(), '3').node_id();
-
     destinationID = entity.decideMooringChance();
     path = std::make_unique<std::vector<int>>(astar->perform(entity.graph(), entity.node(), entity.graph()[destinationID]));
+    astar->tag(const_cast<map::map_graph &>(entity.graph()), *path);
 }
 
 void kmint::pigisland::BoatDamagedState::exit(kmint::pigisland::boat &entity)

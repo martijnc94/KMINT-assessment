@@ -12,6 +12,7 @@ namespace kmint
         {
             entity.resetTSinceMove();
             entity.move(entity.graph()[path->front()]);
+            const_cast<map::map_graph &>(entity.graph())[path->front()].tag(kmint::graph::node_tag::normal);
             path->erase(path->begin());
 
             if (entity.node().node_id() == destinationID) {
@@ -35,11 +36,13 @@ namespace kmint
             auto restingPlace = entity.getRestingPlace();
             destinationID = restingPlace->node_id();
             path = std::make_unique<std::vector<int>>(astar->perform(entity.graph(), entity.node(), *restingPlace));
+            astar->tag(const_cast<map::map_graph &>(entity.graph()), *path);
         }
 
         void TiredState::exit(shark &entity)
         {
             std::cout << "Knabbel left tired state." << std::endl;
+            astar->tag(const_cast<map::map_graph &>(entity.graph()), *path, kmint::graph::node_tag::normal);
         }
     }
 }

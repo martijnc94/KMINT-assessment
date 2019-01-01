@@ -1,5 +1,6 @@
 #include "Pathfinder.h"
 
+
 int kmint::pigisland::Pathfinder::get_lowest(const map::map_graph &graph, const std::vector<int> &closedList,
                                              std::map<int, double> &distances) const
 {
@@ -29,4 +30,11 @@ kmint::pigisland::Pathfinder::reconstruct_path(std::map<int, int> &cameFrom, int
     path.emplace_back(destination);
 
     return path;
+}
+
+void kmint::pigisland::Pathfinder::tag(kmint::map::map_graph &graph, std::vector<int> &path, const node_tag t) const
+{
+    for (auto p : path) {
+        graph[p].tag(node_tag::path);
+    }
 }

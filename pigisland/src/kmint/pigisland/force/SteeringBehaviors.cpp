@@ -48,7 +48,6 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::calculate()
     res += cohesionForce;
     res += separationForce;
     res += alignmentForce;
-    res += flee();
 
     return res;
 }
