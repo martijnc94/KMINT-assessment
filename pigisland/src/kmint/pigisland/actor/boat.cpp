@@ -25,9 +25,9 @@ namespace kmint
             ports[cornID] = (std::make_unique<Port>(1, 30, 50));
             ports[grassID] = (std::make_unique<Port>(2, 20, 100));
             ports[treeID] = (std::make_unique<Port>(3, 50, 50));
-            mooringChances[cornID] = 33;
-            mooringChances[grassID] = 33;
-            mooringChances[treeID] = 33;
+            mooringChances[cornID] = 33.3;
+            mooringChances[grassID] = 33.3;
+            mooringChances[treeID] = 33.3;
         }
 
         void boat::act(delta_time dt)

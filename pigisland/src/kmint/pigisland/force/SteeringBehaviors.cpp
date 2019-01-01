@@ -199,7 +199,7 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::wallAvoidance()
 kmint::math::vector2d kmint::pigisland::SteeringBehaviors::flee()
 {
     auto v = math::vector2d{};
-    const double panicDistanceSq = 100 * 100;
+    const double panicDistanceSq = 10 * 10;
 
     auto desiredVelocity = math::vector2d{};
     for (auto o : obstacles) {
