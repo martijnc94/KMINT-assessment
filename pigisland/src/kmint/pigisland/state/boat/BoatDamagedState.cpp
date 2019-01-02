@@ -24,7 +24,6 @@ bool kmint::pigisland::BoatDamagedState::execute(kmint::pigisland::boat &entity)
 
         // Adjust mooring chances.
         entity.adjustMooringChance(static_cast<int>(destinationID), amountRepaired);
-
         entity.getStateMachine().changeState(std::make_unique<BoatWanderingState>());
     }
 

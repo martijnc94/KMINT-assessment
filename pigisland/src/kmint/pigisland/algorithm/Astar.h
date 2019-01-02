@@ -14,7 +14,7 @@ namespace kmint
             std::vector<int> perform(const map::map_graph &graph, map::map_node const &source,
                                      map::map_node const &destination) override;
         private:
-            const double heurestic(const map::map_node &a, const map::map_node &b) const;
+            const double heuristic(const map::map_node &a, const map::map_node &b) const;
         };
     }
 }

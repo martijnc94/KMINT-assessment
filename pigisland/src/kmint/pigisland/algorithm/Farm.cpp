@@ -40,7 +40,7 @@ std::vector<kmint::pigisland::pig *> kmint::pigisland::Farm::breed()
         }
     }
 
-    // Make new pig population.
+    // Make new pig population from the newly chosen DNA strings.
     counter = 0;
     for (auto p = stage.begin(); p != stage.end(); ++p) {
         auto &f = *p;
@@ -62,7 +62,9 @@ std::vector<kmint::pigisland::pig *> kmint::pigisland::Farm::breed()
 
 std::map<kmint::pigisland::pig *, double> kmint::pigisland::Farm::generateBreedingChances()
 {
+    // Holds the chance the pig will be chosen.
     auto chances = std::map<pig*, double>{};
+    // Holds the final calculated fitness score.
     auto fitness = std::map<pig*, double>{};
 
     auto totalFitness = 0.0;
@@ -100,6 +102,7 @@ std::map<kmint::pigisland::pig *, double> kmint::pigisland::Farm::generateBreedi
 kmint::pigisland::pig *kmint::pigisland::Farm::choosePig(double random,
                                                          std::map<kmint::pigisland::pig *, double> &chances)
 {
+    // Choose a pig, based on the earlier calculated chances.
     for (auto& pig : chances) {
         if (pig.second <= random) {
             return pig.first;
