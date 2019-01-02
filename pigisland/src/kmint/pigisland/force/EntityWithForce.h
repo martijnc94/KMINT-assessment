@@ -1,6 +1,7 @@
 #ifndef KMINT_ASESSMENT_ENTITYWITHFORCE_H
 #define KMINT_ASESSMENT_ENTITYWITHFORCE_H
 #include <kmint/play/free_roaming_actor.hpp>
+#include <kmint/pigisland/math.h>
 
 namespace kmint
 {
@@ -29,6 +30,9 @@ namespace kmint
             void setSide(const math::vector2d &side);
             void setLocation(const math::vector2d &loc)
             { location(loc); }
+
+            double getSpeed() const
+            { return vectorLength(getVelocity()); }
         protected:
             double mass{1};
             math::vector2d velocity;
