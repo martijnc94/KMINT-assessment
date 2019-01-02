@@ -1,4 +1,5 @@
 #include "math.h"
+#include <kmint/pigisland/force/EntityWithForce.h>
 
 namespace kmint {
     namespace pigisland
