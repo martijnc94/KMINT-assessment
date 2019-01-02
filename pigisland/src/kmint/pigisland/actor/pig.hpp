@@ -4,6 +4,7 @@
 #include <kmint/pigisland/domain/DNAString.h>
 #include <kmint/pigisland/force/SteeringBehaviors.h>
 #include <kmint/pigisland/force/EntityWithForce.h>
+#include <kmint/pigisland/algorithm/EntityWithDNA.h>
 #include "kmint/play.hpp"
 #include "boat.hpp"
 
@@ -15,7 +16,7 @@ namespace kmint
         static const int BASEFITNESS = 10000;
         static const int ISLANDAVOIDANCEDISTANCE = 15;
 
-        class pig : public EntityWithForce
+        class pig : public EntityWithForce, public EntityWithDNA
         {
         public:
             pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle> &obstacles);
@@ -34,20 +35,17 @@ namespace kmint
             void setEaten(bool e)
             { eaten = e; }
             bool isEaten() const;
-            DNAString &getGeneticAttributes() const;
             boat &getBoat() const;
             shark &getShark() const;
             bool isSaved() const;
             void setSaved(bool saved);
             int getFitness() const;
             void setFitness(int fitness);
-            void setGeneticAttributes(std::unique_ptr<DNAString> &gA);
         private:
             boat &boatActor;
             shark &sharkActor;
             play::image_drawable drawable_;
             std::unique_ptr<SteeringBehaviors> steeringBehaviors;
-            std::unique_ptr<DNAString> geneticAttributes;
 
             bool eaten;
             bool saved;

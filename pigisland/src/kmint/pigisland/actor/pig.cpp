@@ -25,10 +25,11 @@ namespace kmint
         } // namespace
 
         pig::pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle> &obstacles)
-                : EntityWithForce{random_vector()}, boatActor(b),
+                : EntityWithForce{random_vector()},
+                  EntityWithDNA(),
+                  boatActor(b),
                   sharkActor(s), drawable_{*this, pig_image()},
                   steeringBehaviors(std::make_unique<SteeringBehaviors>(*this, obstacles)),
-                  geneticAttributes(DNAString::createRandom()),
                   eaten(false),
                   saved(false),
                   fitness(BASEFITNESS)
@@ -55,16 +56,11 @@ namespace kmint
         pig::pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna, std::vector<Obstacle> &obstacles)
                 : EntityWithForce{
                 random_vector()}, boatActor(b), sharkActor(s), drawable_{*this, pig_image()}, steeringBehaviors(
-                std::make_unique<SteeringBehaviors>(*this, obstacles)), geneticAttributes(std::move(dna)),
+                std::make_unique<SteeringBehaviors>(*this, obstacles)),
                 eaten(false),
                 saved(false),
                 fitness(0)
         {}
-
-        DNAString &pig::getGeneticAttributes() const
-        {
-            return *geneticAttributes;
-        }
 
         boat &pig::getBoat() const
         {
@@ -101,11 +97,6 @@ namespace kmint
             if (!eaten && !saved) {
                 pig::fitness = fitness;
             }
-        }
-
-        void pig::setGeneticAttributes(std::unique_ptr<DNAString> &gA)
-        {
-            geneticAttributes = std::move(gA);
         }
     } // namespace pigisland
 
