@@ -13,7 +13,7 @@ namespace kmint
 {
     namespace pigisland
     {
-        static const int SHARKSTARTENERGY = 100;
+        static const int SHARKSTARTENERGY = 10;
         static const int SHARKSCAREDRANGE = 50;
 
         class shark : public play::map_bound_actor, public EntityWithState<shark>

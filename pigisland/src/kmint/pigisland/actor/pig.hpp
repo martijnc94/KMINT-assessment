@@ -13,6 +13,7 @@ namespace kmint
     {
         class shark;
         static const int BASEFITNESS = 10000;
+        static const int ISLANDAVOIDANCEDISTANCE = 15;
 
         class pig : public EntityWithForce
         {

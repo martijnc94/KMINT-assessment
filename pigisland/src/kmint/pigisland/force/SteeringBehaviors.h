@@ -22,15 +22,12 @@ namespace kmint
             std::vector<Obstacle> &obstacles;
             std::vector<math::vector2d> feelers;
 
-            void createFeelers();
             math::vector2d seek(math::vector2d &targetPos);
             math::vector2d arrive(math::vector2d &target, Deceleration deceleration);
             math::vector2d cohesion();
             math::vector2d separation();
             math::vector2d alignment();
-            math::vector2d flee();
-            math::vector2d obstacleAvoidance();
-            math::vector2d wallAvoidance();
+            math::vector2d obstacleAvoidance(const Obstacle& o);
         };
     }
 }

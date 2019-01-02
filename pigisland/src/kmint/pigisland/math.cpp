@@ -15,6 +15,14 @@ namespace kmint {
             return math::vector2d{v.x() / length, v.y() / length};
         }
 
+        double vectorDistanceSquared(const math::vector2d &v1, const math::vector2d &v2)
+        {
+            double ySeperation = v2.y() - v1.y();
+            double xSeperation = v2.x() - v1.x();
+
+            return (ySeperation * ySeperation) + (xSeperation * xSeperation);
+        }
+
         math::vector2d vectorPerp(const math::vector2d &v)
         {
             auto vector = math::vector2d{};

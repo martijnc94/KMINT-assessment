@@ -43,11 +43,20 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::calculate()
         alignmentForce *= actor.getGeneticAttributes().getAlignment();
     }
 
+    math::vector2d obstacleAvoidanceForce{};
+    for (auto& o : obstacles) {
+        obstacleAvoidanceForce += obstacleAvoidance(o);
+    }
+
     res += forceToBoat;
     res += forceToShark;
     res += cohesionForce;
     res += separationForce;
     res += alignmentForce;
+
+    if (vectorLength(obstacleAvoidanceForce) > 0.1) {
+        res *= -1;
+    }
 
     return res;
 }
@@ -164,53 +173,14 @@ void kmint::pigisland::SteeringBehaviors::enforceNonPenetrationConstraint()
     }
 }
 
-kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance()
+kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance(const Obstacle& o)
 {
-    auto v = math::vector2d{};
-
-    for (auto o : obstacles) {
-        auto toTarget = o.center - actor.location();
-        auto distance = vectorLength(toTarget);
-
-        if (distance < actor.range_of_perception()) {
-            v += -1 * seek(o.center);
-        }
+    const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
+    if (vectorDistanceSquared(actor.location(), o.center) > panicDistanceSquared) {
+        return math::vector2d{0, 0};
     }
 
-    v = vectorNormalize(v);
-
-    return v;
-}
-
-void kmint::pigisland::SteeringBehaviors::createFeelers()
-{
-    feelers[0] = actor.location() + 10 * actor.getHeading();
-
-    auto tmp = actor.getHeading();
-
-}
-
-kmint::math::vector2d kmint::pigisland::SteeringBehaviors::wallAvoidance()
-{
-
-}
-
-kmint::math::vector2d kmint::pigisland::SteeringBehaviors::flee()
-{
-    auto v = math::vector2d{};
-    const double panicDistanceSq = 10 * 10;
-
-    auto desiredVelocity = math::vector2d{};
-    for (auto o : obstacles) {
-        auto toTarget = o.center - actor.location();
-        auto distance = vectorLength(toTarget);
-
-        if (distance < panicDistanceSq) {
-            desiredVelocity += actor.location() - (o.center + math::vector2d{16,16}) * actor.getMaxSpeed();
-        }
-    }
-
-    desiredVelocity = vectorNormalize(desiredVelocity);
+    math::vector2d desiredVelocity = vectorNormalize(actor.location() - o.center) * actor.getMaxSpeed();
 
     return (desiredVelocity - actor.getVelocity());
 }

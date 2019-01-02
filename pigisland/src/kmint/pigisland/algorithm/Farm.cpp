@@ -40,7 +40,7 @@ std::vector<kmint::pigisland::pig *> kmint::pigisland::Farm::breed()
         }
     }
 
-    // Make new pig pupulation.
+    // Make new pig population.
     counter = 0;
     for (auto p = stage.begin(); p != stage.end(); ++p) {
         auto &f = *p;
