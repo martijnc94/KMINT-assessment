@@ -37,17 +37,21 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::calculate()
         separationForce *= actor.getGeneticAttributes().getSeparation();
     }
 
-    math::vector2d alignmentForce{};
-    if (actor.getGeneticAttributes().getAlignment() != 0) {
-        alignmentForce += alignment();
-        alignmentForce *= actor.getGeneticAttributes().getAlignment();
-    }
+	math::vector2d alignmentForce{};
+	if (actor.getGeneticAttributes().getAlignment() != 0) {
+		alignmentForce += alignment();
+		alignmentForce *= actor.getGeneticAttributes().getAlignment();
+	}
 
-    res += forceToBoat;
-    res += forceToShark;
-    res += cohesionForce;
-    res += separationForce;
-    res += alignmentForce;
+	math::vector2d avoidanceForce{};
+	avoidanceForce += collisionAvoidance();
+
+	res += forceToBoat;
+	res += forceToShark;
+	res += cohesionForce;
+	res += separationForce;
+	res += alignmentForce;
+    res += avoidanceForce;
 
     return res;
 }
@@ -121,6 +125,24 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::separation()
     return steeringForce;
 }
 
+kmint::math::vector2d kmint::pigisland::SteeringBehaviors::collisionAvoidance()
+{
+	math::vector2d avoidanceForce;
+	const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
+	for (auto i = actor.begin_perceived(); i != actor.end_perceived(); ++i) {
+
+		auto &f = *i;
+		if (auto o = dynamic_cast<Obstacle *>(&f); o) {
+			if (vectorDistanceSquared(actor.location(), o->location()) < panicDistanceSquared) {
+				avoidanceForce = actor.location() - o->location();
+				avoidanceForce = vectorNormalize(avoidanceForce) * actor.getMaxForce() * 200;
+			}
+		}
+	}
+
+	return avoidanceForce;
+}
+
 kmint::math::vector2d kmint::pigisland::SteeringBehaviors::alignment()
 {
     math::vector2d averageHeading;
@@ -163,15 +185,3 @@ void kmint::pigisland::SteeringBehaviors::enforceNonPenetrationConstraint()
         }
     }
 }
-
-//kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance(const Obstacle& o)
-//{
-//    const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
-//    if (vectorDistanceSquared(actor.location(), o.center) > panicDistanceSquared) {
-//        return math::vector2d{0, 0};
-//    }
-//
-//    math::vector2d desiredVelocity = vectorNormalize(actor.location() - o.center) * actor.getMaxSpeed();
-//
-//    return (desiredVelocity - actor.getVelocity());
-//}

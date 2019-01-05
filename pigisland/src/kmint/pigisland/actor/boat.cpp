@@ -5,6 +5,7 @@
 #include "kmint/pigisland/resources.hpp"
 #include "boat.hpp"
 #include <iostream>
+#include <numeric>
 #include <kmint/pigisland/state/boat/global/InWaterState.h>
 
 

@@ -26,6 +26,7 @@ namespace kmint
             math::vector2d arrive(math::vector2d &target, Deceleration deceleration);
             math::vector2d cohesion();
             math::vector2d separation();
+            math::vector2d collisionAvoidance();
             math::vector2d alignment();
         };
     }
