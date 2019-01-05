@@ -19,8 +19,9 @@ namespace kmint
         class pig : public EntityWithForce, public EntityWithDNA
         {
         public:
-            pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle> &obstacles);
-            pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna, std::vector<Obstacle> &obstacles);
+            pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle *> &obstacles);
+            pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna,
+                std::vector<Obstacle *> &obstacles);
 
             bool perceptive() const override { return true; }
             scalar range_of_perception() const override { return 30.0f; };

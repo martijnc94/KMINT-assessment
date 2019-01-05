@@ -30,7 +30,6 @@ namespace kmint
             void setSide(const math::vector2d &side);
             void setLocation(const math::vector2d &loc)
             { location(loc); }
-
             double getSpeed() const
             { return vectorLength(getVelocity()); }
         protected:

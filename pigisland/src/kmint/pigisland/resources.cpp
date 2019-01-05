@@ -50,33 +50,33 @@ graphics::image pig_image() { return graphics::image{"resources/pig.png"}; }
 
 graphics::image boat_image() { return graphics::image{"resources/boat.png"}; }
 
-std::vector<Obstacle> makeObstacles()
+std::vector<Obstacle *> makeObstacles(play::stage &s)
 {
-    auto v = std::vector<Obstacle>();
+    auto v = std::vector<Obstacle*>();
 
     // First island.
     for (auto y = 0; y < 3; ++y) {
         if (y == 0) {
             // First row.
             for (auto x = 0; x < 6; x++) {
-                auto o = Obstacle{};
-                o.center = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
+                auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
 
-                v.emplace_back(o);
+                auto &b = s.build_actor<Obstacle>(loc);
+                v.emplace_back(&b);
             }
         } else if (y == 1) {
             for (auto x = 0; x < 9; x++) {
-                auto o = Obstacle{};
-                o.center = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
+                auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
 
-                v.emplace_back(o);
+                auto &b = s.build_actor<Obstacle>(loc);
+                v.emplace_back(&b);
             }
         } else if (y == 2) {
             for (auto x = 0; x < 6; x++) {
-                auto o = Obstacle{};
-                o.center = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
+                auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
 
-                v.emplace_back(o);
+                auto &b = s.build_actor<Obstacle>(loc);
+                v.emplace_back(&b);
             }
         }
     }

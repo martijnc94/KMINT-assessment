@@ -13,7 +13,7 @@ map::map map();
 graphics::image shark_image();
 graphics::image pig_image();
 graphics::image boat_image();
-std::vector<Obstacle> makeObstacles();
+std::vector<Obstacle *> makeObstacles(play::stage &s);
 
 } // namespace pigisland
 } // namespace kmint

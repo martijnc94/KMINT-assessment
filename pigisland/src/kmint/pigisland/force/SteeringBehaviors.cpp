@@ -3,7 +3,7 @@
 #include "kmint/pigisland/actor/pig.hpp"
 #include <kmint/pigisland/actor/shark.hpp>
 
-kmint::pigisland::SteeringBehaviors::SteeringBehaviors(pig &actor, std::vector<Obstacle> &obstacles) : actor(actor), obstacles(obstacles) {}
+kmint::pigisland::SteeringBehaviors::SteeringBehaviors(pig &actor, std::vector<Obstacle *> &obstacles) : actor(actor), obstacles(obstacles) {}
 
 kmint::math::vector2d kmint::pigisland::SteeringBehaviors::calculate()
 {
@@ -43,20 +43,11 @@ kmint::math::vector2d kmint::pigisland::SteeringBehaviors::calculate()
         alignmentForce *= actor.getGeneticAttributes().getAlignment();
     }
 
-    math::vector2d obstacleAvoidanceForce{};
-    for (auto& o : obstacles) {
-        obstacleAvoidanceForce += obstacleAvoidance(o);
-    }
-
     res += forceToBoat;
     res += forceToShark;
     res += cohesionForce;
     res += separationForce;
     res += alignmentForce;
-
-    if (vectorLength(obstacleAvoidanceForce) > 0.1) {
-        res *= -1;
-    }
 
     return res;
 }
@@ -173,14 +164,14 @@ void kmint::pigisland::SteeringBehaviors::enforceNonPenetrationConstraint()
     }
 }
 
-kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance(const Obstacle& o)
-{
-    const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
-    if (vectorDistanceSquared(actor.location(), o.center) > panicDistanceSquared) {
-        return math::vector2d{0, 0};
-    }
-
-    math::vector2d desiredVelocity = vectorNormalize(actor.location() - o.center) * actor.getMaxSpeed();
-
-    return (desiredVelocity - actor.getVelocity());
-}
+//kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance(const Obstacle& o)
+//{
+//    const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
+//    if (vectorDistanceSquared(actor.location(), o.center) > panicDistanceSquared) {
+//        return math::vector2d{0, 0};
+//    }
+//
+//    math::vector2d desiredVelocity = vectorNormalize(actor.location() - o.center) * actor.getMaxSpeed();
+//
+//    return (desiredVelocity - actor.getVelocity());
+//}

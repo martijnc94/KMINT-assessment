@@ -24,7 +24,7 @@ namespace kmint
             }
         } // namespace
 
-        pig::pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle> &obstacles)
+        pig::pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle *> &obstacles)
                 : EntityWithForce{random_vector()},
                   EntityWithDNA(),
                   boatActor(b),
@@ -53,9 +53,11 @@ namespace kmint
             }
         }
 
-        pig::pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna, std::vector<Obstacle> &obstacles)
+        pig::pig(math::vector2d location, boat &b, shark &s, std::unique_ptr<DNAString> dna,
+                 std::vector<Obstacle *> &obstacles)
                 : EntityWithForce{
-                random_vector()}, boatActor(b), sharkActor(s), drawable_{*this, pig_image()}, steeringBehaviors(
+                random_vector()}, boatActor(b), sharkActor(s), drawable_{*this, pig_image()},
+                steeringBehaviors(
                 std::make_unique<SteeringBehaviors>(*this, obstacles)),
                 eaten(false),
                 saved(false),

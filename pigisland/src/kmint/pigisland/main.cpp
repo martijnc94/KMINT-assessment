@@ -24,7 +24,8 @@ int main()
     play::stage s{};
 
     auto map = pigisland::map();
-    std::vector<Obstacle> obstacles = makeObstacles();
+    auto obstacles = makeObstacles(s);
+    s.build_actor<Obstacle>(math::vector2d{100.0f, 100.0f});
     s.build_actor<play::background>(math::size(1024, 768), graphics::image{map.background_image()});
     s.build_actor<play::map_actor>(math::vector2d{0.f, 0.f}, map.graph());
     std::unique_ptr<Farm> farm = std::make_unique<Farm>(s);

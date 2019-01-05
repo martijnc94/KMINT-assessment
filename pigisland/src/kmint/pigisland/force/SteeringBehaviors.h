@@ -14,12 +14,12 @@ namespace kmint
         class SteeringBehaviors
         {
         public:
-            explicit SteeringBehaviors(pig &actor, std::vector<Obstacle> &obstacles);
+            explicit SteeringBehaviors(pig &actor, std::vector<Obstacle *> &obstacles);
             math::vector2d calculate();
             void enforceNonPenetrationConstraint();
         private:
             pig &actor;
-            std::vector<Obstacle> &obstacles;
+            std::vector<Obstacle*> &obstacles;
             std::vector<math::vector2d> feelers;
 
             math::vector2d seek(math::vector2d &targetPos);
@@ -27,7 +27,6 @@ namespace kmint
             math::vector2d cohesion();
             math::vector2d separation();
             math::vector2d alignment();
-            math::vector2d obstacleAvoidance(const Obstacle& o);
         };
     }
 }
