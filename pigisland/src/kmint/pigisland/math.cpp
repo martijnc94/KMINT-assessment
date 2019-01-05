@@ -64,7 +64,7 @@ namespace kmint {
         math::vector2d random_vector()
         {
             auto x = random_scalar(100, 924);
-            auto y = random_scalar(50, 728);
+            auto y = random_scalar(100, 728);
             return {x, y};
         }
     }

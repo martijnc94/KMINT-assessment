@@ -58,12 +58,18 @@ std::vector<Obstacle *> makeObstacles(play::stage &s)
     for (auto y = 0; y < 3; ++y) {
         if (y == 0) {
             // First row.
-            for (auto x = 0; x < 6; x++) {
-                auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
+			for (auto x = 0; x < 6; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
 
-                auto &b = s.build_actor<Obstacle>(loc);
-                v.emplace_back(&b);
-            }
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+			for (auto x = 29; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
         } else if (y == 1) {
             for (auto x = 0; x < 9; x++) {
                 auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
@@ -71,15 +77,66 @@ std::vector<Obstacle *> makeObstacles(play::stage &s)
                 auto &b = s.build_actor<Obstacle>(loc);
                 v.emplace_back(&b);
             }
-        } else if (y == 2) {
-            for (auto x = 0; x < 6; x++) {
-                auto loc = math::vector2d{(float)16 + (x * 32), (float)16 + (y * 32)};
+			for (auto x = 29; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
 
-                auto &b = s.build_actor<Obstacle>(loc);
-                v.emplace_back(&b);
-            }
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
         }
+		else if (y == 2) {
+			for (auto x = 0; x < 6; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+			for (auto x = 31; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+		} else if (y == 3) {
+			for (auto x = 31; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+		}
     }
+
+	for (int y = 17; y < 23; y++) {
+		if (y < 22) {
+			for (auto x = 2; x < 7; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+			for (auto x = 28; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+		}
+		else {
+			for (auto x = 2; x < 6; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+			for (auto x = 25; x < 33; x++) {
+				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
+
+				auto &b = s.build_actor<Obstacle>(loc);
+				v.emplace_back(&b);
+			}
+		}
+	}
 
     return v;
 }
