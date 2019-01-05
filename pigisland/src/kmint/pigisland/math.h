@@ -13,6 +13,7 @@ namespace kmint {
         math::vector2d vectorPerp(const math::vector2d &v);
         void wrapAround(EntityWithForce &entity);
         double vectorDistanceSquared(const math::vector2d &v1, const math::vector2d &v2);
+        math::vector2d random_vector();
     }
 }
 

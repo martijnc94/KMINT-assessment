@@ -12,18 +12,6 @@ namespace kmint
 {
     namespace pigisland
     {
-
-        namespace
-        {
-
-            math::vector2d random_vector()
-            {
-                auto x = random_scalar(100, 924);
-                auto y = random_scalar(50, 728);
-                return {x, y};
-            }
-        } // namespace
-
         pig::pig(math::vector2d location, boat &b, shark &s, std::vector<Obstacle *> &obstacles)
                 : EntityWithForce{random_vector()},
                   EntityWithDNA(),

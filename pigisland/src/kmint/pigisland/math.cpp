@@ -1,5 +1,6 @@
 #include "math.h"
 #include <kmint/pigisland/force/EntityWithForce.h>
+#include <kmint/random.hpp>
 
 namespace kmint {
     namespace pigisland
@@ -58,6 +59,13 @@ namespace kmint {
                 loc.y(24);
                 entity.setLocation(loc);
             }
+        }
+
+        math::vector2d random_vector()
+        {
+            auto x = random_scalar(100, 924);
+            auto y = random_scalar(50, 728);
+            return {x, y};
         }
     }
 }

@@ -45,7 +45,7 @@ std::vector<kmint::pigisland::pig *> kmint::pigisland::Farm::breed()
     for (auto p = stage.begin(); p != stage.end(); ++p) {
         auto &f = *p;
         if (auto c = dynamic_cast<pig *>(&f); c) {
-            auto newLoc = math::vector2d(counter * 10.0f, counter * 6.0f);
+            auto newLoc = random_vector();
             c->setLocation(newLoc);
             c->setGeneticAttributes(dnaList[counter]);
 
