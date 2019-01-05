@@ -185,15 +185,3 @@ void kmint::pigisland::SteeringBehaviors::enforceNonPenetrationConstraint()
         }
     }
 }
-
-//kmint::math::vector2d kmint::pigisland::SteeringBehaviors::obstacleAvoidance(const Obstacle& o)
-//{
-//    const double panicDistanceSquared = ISLANDAVOIDANCEDISTANCE * ISLANDAVOIDANCEDISTANCE;
-//    if (vectorDistanceSquared(actor.location(), o.center) > panicDistanceSquared) {
-//        return math::vector2d{0, 0};
-//    }
-//
-//    math::vector2d desiredVelocity = vectorNormalize(actor.location() - o.center) * actor.getMaxSpeed();
-//
-//    return (desiredVelocity - actor.getVelocity());
-//}
