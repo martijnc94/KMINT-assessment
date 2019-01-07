@@ -75,7 +75,7 @@ std::map<kmint::pigisland::pig *, double> kmint::pigisland::Farm::generateBreedi
             auto curFitness = 0.0;
             curFitness += p->getFitness();
             if (p->isSaved()) {
-                curFitness *= 1.5;
+                curFitness *= 10.5;
             }
 
             if (p->isEaten()) {

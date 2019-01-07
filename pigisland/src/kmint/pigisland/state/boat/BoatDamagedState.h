@@ -3,6 +3,7 @@
 
 #include <kmint/pigisland/actor/boat.hpp>
 #include <kmint/pigisland/algorithm/Astar.h>
+#include <kmint/pigisland/algorithm/Dijkstra.h>
 
 namespace kmint
 {
@@ -18,6 +19,7 @@ namespace kmint
 
         private:
             std::unique_ptr<Astar> astar;
+            std::unique_ptr<Dijkstra> dijkstra;
             int destinationID;
             std::unique_ptr<std::vector<int>> path;
         };

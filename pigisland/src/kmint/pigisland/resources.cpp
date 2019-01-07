@@ -129,7 +129,7 @@ std::vector<Obstacle *> makeObstacles(play::stage &s)
 				auto &b = s.build_actor<Obstacle>(loc);
 				v.emplace_back(&b);
 			}
-			for (auto x = 25; x < 33; x++) {
+			for (auto x = 23; x < 35; x++) {
 				auto loc = math::vector2d{ (float)16 + (x * 32), (float)16 + (y * 32) };
 
 				auto &b = s.build_actor<Obstacle>(loc);

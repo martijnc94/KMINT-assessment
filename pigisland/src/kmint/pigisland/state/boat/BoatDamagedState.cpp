@@ -4,7 +4,7 @@
 #include "BoatWanderingState.h"
 #include <kmint/pigisland/domain/Random.h>
 
-kmint::pigisland::BoatDamagedState::BoatDamagedState(): astar(std::make_unique<Astar>())
+kmint::pigisland::BoatDamagedState::BoatDamagedState(): astar(std::make_unique<Astar>()), dijkstra(std::make_unique<Dijkstra>())
 {}
 
 bool kmint::pigisland::BoatDamagedState::execute(kmint::pigisland::boat &entity)
@@ -36,6 +36,7 @@ void kmint::pigisland::BoatDamagedState::enter(kmint::pigisland::boat &entity)
 
     destinationID = entity.decideMooringChance();
     path = std::make_unique<std::vector<int>>(astar->perform(entity.graph(), entity.node(), entity.graph()[destinationID]));
+    dijkstra->perform(entity.graph(), entity.node(), entity.graph()[destinationID]);
     astar->tag(const_cast<map::map_graph &>(entity.graph()), *path);
 }
 

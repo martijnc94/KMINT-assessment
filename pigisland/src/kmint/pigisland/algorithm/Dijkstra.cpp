@@ -1,19 +1,12 @@
-#include "Astar.h"
+#include "Dijkstra.h"
 #include <iostream>
 
-const double kmint::pigisland::Astar::heuristic(const kmint::map::map_node &a, const kmint::map::map_node &b) const
-{
-    // Calculate the heuristic for the given source and destination node as the crows fly and divide this by the grid size.
-    return std::abs((a.location().x()) - (b.location().x()) + std::abs((a.location().y()) - (b.location().y()))) / 32;
-}
-
-std::vector<int> kmint::pigisland::Astar::perform(const map::map_graph &graph, const kmint::map::map_node &source,
-                                                  const kmint::map::map_node &destination)
+std::vector<int>
+kmint::pigisland::Dijkstra::perform(const kmint::map::map_graph &graph, const kmint::map::map_node &source,
+                                    const kmint::map::map_node &destination)
 {
     // Holds the distance to the destination.
     std::map<int, double> score;
-    // Holds the distance to the destination with heuristic.
-    std::map<int, double> hScore;
     // Holds the parents from the nodes, making the shortest path.
     std::map<int, int> cameFrom;
     // Holds al nodes which are not visited.
@@ -26,21 +19,18 @@ std::vector<int> kmint::pigisland::Astar::perform(const map::map_graph &graph, c
     // Initialize all nodes in graph.
     for (auto i = 0; i < graph.num_nodes(); ++i) {
         openList.emplace_back(graph[i].node_id());
-        hScore[graph[i].node_id()] =  std::numeric_limits<int>::max();
         score[graph[i].node_id()] = std::numeric_limits<int>::max();
     }
 
     // Set the source node, as this is always the starting point.
     cameFrom[source.node_id()] = source.node_id();
-    hScore[source.node_id()] = 0;
-    score[source.node_id()] = heuristic(source, destination);
+    score[source.node_id()] = 0;
 
-    while(!openList.empty()) {
+    while (!openList.empty()) {
         auto smallest_id = get_lowest(graph, closedList, score);
 
-        // Check if the destination is reached.
         if (smallest_id == destination.node_id()) {
-            std::cout << "Astar visited " << visited << " nodes." << std::endl;
+            std::cout << "Dijkstra visited " << visited << " nodes." << std::endl;
 
             return reconstruct_path(cameFrom, source.node_id(), smallest_id);
         }
@@ -49,25 +39,22 @@ std::vector<int> kmint::pigisland::Astar::perform(const map::map_graph &graph, c
         closedList.emplace_back(smallest_id);
         ++visited;
 
-        // Update the scores with and without the heuristic.
         for (auto neighbour = 0; neighbour < graph[smallest_id].num_edges(); ++neighbour) {
             auto other_id = graph[smallest_id][neighbour].to().node_id();
             if (std::find(closedList.begin(), closedList.end(), other_id) != closedList.end()) {
                 continue;
             }
 
-            auto tentativeScore = hScore[smallest_id] + graph[smallest_id][neighbour].weight();
+            auto tentative_score = score[smallest_id] + graph[smallest_id][neighbour].weight();
 
             if (std::find(openList.begin(), openList.end(), other_id) == openList.end()) {
                 openList.emplace_back(other_id);
-            } else if (tentativeScore >= hScore[other_id]) {
+            } else if (tentative_score >= score[other_id]) {
                 continue;
             }
 
-            // Update the parents list and scores.
             cameFrom[other_id] = smallest_id;
-            hScore[other_id] = tentativeScore;
-            score[other_id] = hScore[other_id] + heuristic(graph[other_id], destination);
+            score[other_id] = tentative_score;
         }
     }
 }
